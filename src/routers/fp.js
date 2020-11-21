@@ -46,21 +46,28 @@ app.post("/forexProvider", async (req,res, next)=>{
         })
     }
 })
-app.patch("/forexProvider" ,async (req,res,next)=>{
-    try{
-        var fp =req.fp
-        const keys= Object.keys(req.body)
-        keys.forEach((key)=>{
-            if(req.body[key])
-                fp[key]=req.body[key]
+app.patch("/forexProvider/:title" ,async (req,res,next)=>{
+    try {
+        var keys= Object.keys(req.body)
+        for(key in keys){
+            if(!req.body[keys[key]])
+                delete req.body[keys[key]]
+        }
+        var prof = await fp.findOne({
+            title: req.params.title,
         })
-        fp=await fp.save()
-        res.send(fp)
-    }
-    catch(e){
+        if (!prof)
+            return res.status(404).send("Does not exist")
+        Object.entries(req.body).forEach((item) => {
+            const key = item[0];
+            const val = item[1];
+            prof[key] = val;
+        });
+        await prof.save()
+        res.send(prof)
+    } catch (e) {
         return next({
-            status: 500,
-            message:e.message
+            message: e.message
         })
     }
 })

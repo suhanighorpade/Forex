@@ -11,7 +11,7 @@ const schema = mongoose.Schema({
         type: mongoose.Schema.Types.String
     },
     contact:{
-        email: mongoose.Schema.Types.String,
+        type: mongoose.Schema.Types.String,
     },
     location:{
         type: mongoose.Schema.Types.String,
