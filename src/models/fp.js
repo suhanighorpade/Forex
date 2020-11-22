@@ -1,11 +1,14 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+
 const schema = mongoose.Schema({
     title: {
         type: mongoose.Schema.Types.String,
         required: true,
     },
-    rating: {
-        type: mongoose.Schema.Types.String
+    rating: Map,
+    mapOfString: {
+        type: Map,
+        of: Number
     },
     about:{
         type: mongoose.Schema.Types.String
