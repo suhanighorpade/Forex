@@ -6,7 +6,6 @@ app.post("/signup", async (req,res, next)=>{
     var user= new User(req.body)
     try{
         user=await user.save()
-        console.log("saved")
     }
     catch(e){
         console.log(e)
@@ -15,7 +14,6 @@ app.post("/signup", async (req,res, next)=>{
             message:e.message
         })
     }
-
     try{
         const token= await user.generateToken()
         res.send({user,token})
@@ -28,9 +26,7 @@ app.post("/signup", async (req,res, next)=>{
     }
 })
 app.post("/login", async (req,res,next)=>{
-    
     try{
-        
      const  user = await User.findByCredentials(req.body.email,req.body.password)
      console.log(user)
      const token = await user.generateToken()
@@ -48,7 +44,7 @@ app.post("/login", async (req,res,next)=>{
 })
 
 app.post("/logout", auth,async (req,res, next)=>{
-
+    console.log(req)
     try{
         var token =req.token
         var user=req.user
@@ -119,18 +115,24 @@ app.get("/me", auth, async (req,res,next)=>{4
     }
 })
 
-app.get("/user/isTaken/:username",async (req,res,next)=>{
-    try{    
-        var user= await User.find({username:req.params.username})
-        res.send({
-            valid:user.length==0
+app.post("/logout", auth,async (req,res, next)=>{
+
+    try{
+        var token =req.token
+        var user=req.user
+        user.tokens= user.tokens.filter((t)=>{
+            t!=token
         })
+        await user.save()
+        res.send(user)
     }
     catch(e){
-        next({
-            status:500,
+        return next({
+            status: 500,
             message:e.message
         })
     }
 })
+
+
 module.exports=app;

@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const bcrypt= require("bcrypt")
 const jwt= require("jsonwebtoken")
 const validator=require("validator")
+const fp = require("./fp")
 const schema= mongoose.Schema({
     username:{
         type:"String",
@@ -45,7 +46,6 @@ const schema= mongoose.Schema({
 	timestamps:true,
 })
 schema.methods.generateToken= async function(){
-
     const user=this
     const id=user._id;
     const token = await jwt.sign({id},"secretkey")
@@ -55,10 +55,13 @@ schema.methods.generateToken= async function(){
 }
 
 schema.statics.findByCredentials= async function(email, password){
-    const user=await User.findOne({email})
-    if(!user)
-		throw new Error("No such email in database")
-
+    var user=await User.findOne({email})
+    if(!user){
+        user=await fp.findOne({email})
+        console.log(user)
+        if(!user)
+        throw new Error("No such email in database")
+    }
 	const isMatch = await bcrypt.compare(password,user.password)
 	if(!isMatch)
 		throw new Error("password did not match")
