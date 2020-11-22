@@ -10,6 +10,7 @@ app.get("/fcs", async (req, res, next) => {
     var jsonData = await data.json();
     console.log(jsonData)
     try {
+        await Currency.deleteMany({title:req.body.title})
         prof = await saveCurrency(req.body.title,jsonData)
         res.send(prof)
     }
@@ -24,7 +25,7 @@ app.get("/fcs", async (req, res, next) => {
 
 app.get("/allCurrencies", async (req, res, next) => {
     try {
-        var currencies = await Currency.find().sort({"createdAt":-1})
+        var currencies = await Currency.find().sort({"title":-1})
         res.send(currencies)
     }
     catch (e) {

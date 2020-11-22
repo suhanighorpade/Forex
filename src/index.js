@@ -8,14 +8,14 @@ const userRouter=require("./routers/users")
 const ForexProfileRouter=require("./routers/fp")
 const CurrencyRouter = require("./routers/currency")
 const db=require("./db/mongoose.js");
-
+const utilityRouter = require("./routers/features")
 
 app.use(express.json())
 
 app.use(userRouter)
 
 app.use(ForexProfileRouter)
-
+app.use(utilityRouter)
 app.use(CurrencyRouter)
 
 app.use(function(req, res, next) {
@@ -26,6 +26,7 @@ app.use(function(req, res, next) {
   
 app.use(errorHandler);
 const port=process.env.PORT||8081
+
 app.listen(port,()=>{
     console.log(`Node server started on ${port} port`)
 })

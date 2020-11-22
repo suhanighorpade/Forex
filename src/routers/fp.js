@@ -62,7 +62,7 @@ app.get("/forexProvider", async (req, res, next) => {
         var profile = await fp.findOne({
             title : req.body.title
         })
-      
+        res.send(profile)
     }
     catch (e) {
         return next({
@@ -123,6 +123,7 @@ app.delete("/forexProviders", async (req,res,next)=>{
         })
     }
 })
+
 
 
 
