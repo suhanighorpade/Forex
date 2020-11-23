@@ -5,20 +5,13 @@ saveCurrency = async function (title, data) {
     var provider = await fp.findOne({
         title: title
     })
-    console.log(provider)
-    var USDINR = [], EURINR = [], USDEUR = []
-    var profile = {
+    var currencyData = {
         forexProvider: provider._id,
-        title: provider.title,
-        USDEUR: [...USDEUR, data.response[0]],
-        USDINR: [...USDINR, data.response[1]],
-        EURINR: [...EURINR, data.response[2]]
-
+        ...data
     }
-    var prof = new Currency(profile)
-    console.log(prof)
-    prof = await prof.save()
-    return prof
+    var currency = new Currency(currencyData)
+    currency= await currency.save()
+    return currency
 }
 
 module.exports = saveCurrency;

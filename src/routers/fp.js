@@ -4,9 +4,10 @@ const auth = require("../middlewares/auth.js")
 const User = require("../models/users")
 const fp = require("../models/fp")
 const fetch = require('node-fetch');
+const saveCurrency = require("./../utils/saveCurrency")
 
 app.get("/allforexProviders", async (req, res, next) => {
-    console.log(req.body)
+    
     try {
         var profiles = await fp.find()
         res.send(profiles)
@@ -87,6 +88,7 @@ app.post("/forexProvider", async (req,res, next)=>{
 })
 app.patch("/forexProvider/:title" ,async (req,res,next)=>{
     try {
+        
         var keys= Object.keys(req.body)
         for(key in keys){
             if(!req.body[keys[key]])
@@ -124,6 +126,18 @@ app.delete("/forexProviders", async (req,res,next)=>{
     }
 })
 
+app.post("/forexProviders/:title/latestRates",async (req,res,next)=>{
+    try{
+        var update= await saveCurrency(req.params.title,req.body)
+        res.send(update)
+    }
+    catch(e){
+        return next({
+            status:500,
+            message:e.message
+        })
+    }
+})
 
 
 
