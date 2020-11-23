@@ -29,7 +29,6 @@ app.get("/allforexProviders", async (req, res, next) => {
     }
 })
 
-<<<<<<< HEAD
 
 
 app.get("/getratings/:title",function (req, res) {
@@ -68,8 +67,6 @@ app.get("/setratings/:title/:rate",function (req, res) {
         }
     });
 });
-=======
->>>>>>> 10d24defe012258a3349585c442080af60212d5d
 
 app.get("/forexProviders/:title", async (req, res, next) => {
     console.log(req.body)
