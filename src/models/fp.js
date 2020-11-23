@@ -16,6 +16,9 @@ const schema = mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true,
     },
+    stars:{
+        type: mongoose.Schema.Types.String
+    },
     rating: Map,
     mapOfString: {
         type: Map,
