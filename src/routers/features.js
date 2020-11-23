@@ -15,7 +15,13 @@ app.post("/notification",async(req,res,next)=>{
         console.log("mails" , mails)
         console.log(typeof(mails))
         for(const [key,val] of mails.entries()){
-            var send = sendNotification(val,req.body.notification)
+            var send = await sendNotification(val,req.body.notification)
+             var user =  await User.findOne({
+                 email : val
+             })
+             user.notifications = [...user.notifications,req.body.notification]
+             user = await user.save()
+            
           }
           res.send("Notification sent")
           
@@ -26,5 +32,36 @@ app.post("/notification",async(req,res,next)=>{
         })
     }
 })
+
+
+var getRating = function(fpsss){
+        totaluser_1 = fpsss.rating.get("1")
+        totaluser_2 = fpsss.rating.get("2")
+        totaluser_3 = fpsss.rating.get("3")
+        totaluser_4 = fpsss.rating.get("4")
+        totaluser_5 = fpsss.rating.get("5")
+        avgrating = (totaluser_1*1 +totaluser_2*2 + totaluser_3*3+ totaluser_4*4+totaluser_5*5)/(totaluser_1+totaluser_2+totaluser_3+totaluser_4+totaluser_5)
+        console.log(Math.round(avgrating))
+        return Math.round(avgrating)
+};
+
+app.post("/setRating/:title", async(req,res,next)=> {
+    try {
+       var fpsss= await fp.findOne({title : req.params.title})
+       console.log(fpsss.rating)
+       rate = req.body.rate
+       currentrating = fpsss.rating.get(rate) 
+       fpsss.rating.set(rate,currentrating+1);
+       fpsss.stars = getRating(fpsss)
+       console.log(fpsss.rating)
+       await fpsss.save();
+       res.send(fpsss)
+    } catch (e) {
+        return next({
+            status: 404,
+            message: e.message
+        })
+    }
+});
 
 module.exports = app;
