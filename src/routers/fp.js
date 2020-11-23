@@ -4,21 +4,32 @@ const auth = require("../middlewares/auth.js")
 const User = require("../models/users")
 const fp = require("../models/fp")
 const fetch = require('node-fetch');
+const Currency= require("./../models/currencies")
 const saveCurrency = require("./../utils/saveCurrency")
 
 app.get("/allforexProviders", async (req, res, next) => {
     
     try {
         var profiles = await fp.find()
-        res.send(profiles)
+        let ans=[]
+        for(var profile of profiles){
+            let data=await Currency.find({forexProvider:profile._id}).limit(20).exec()
+            
+            console.log(profile)
+            ans.push({...profile,rates:data})
+        }
+        res.send(ans)
     }
     catch (e) {
+        console.log(e)
         return next({
             status: 404,
             message: e.message
         })
     }
 })
+
+
 
 app.get("/getratings/:title",function (req, res) {
     fp.findOne({title : req.params.title},function (err, fpsss) {
@@ -57,13 +68,15 @@ app.get("/setratings/:title/:rate",function (req, res) {
     });
 });
 
-app.get("/forexProvider", async (req, res, next) => {
+app.get("/forexProviders/:title", async (req, res, next) => {
     console.log(req.body)
     try {
         var profile = await fp.findOne({
-            title : req.body.title
+            title : req.params.title
         })
-        res.send(profile)
+        let data=await Currency.find({forexProvider:profile._id}).limit(20).exec()
+        res.send({...profile,rates:data})
+        
     }
     catch (e) {
         return next({
@@ -138,6 +151,8 @@ app.post("/forexProviders/:title/latestRates",async (req,res,next)=>{
         })
     }
 })
+
+
 
 
 
