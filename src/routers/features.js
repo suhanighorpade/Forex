@@ -15,7 +15,13 @@ app.post("/notification",async(req,res,next)=>{
         console.log("mails" , mails)
         console.log(typeof(mails))
         for(const [key,val] of mails.entries()){
-            var send = sendNotification(val,req.body.notification)
+            var send = await sendNotification(val,req.body.notification)
+             var user =  await User.findOne({
+                 email : val
+             })
+             user.notifications = [...user.notifications,req.body.notification]
+             user = await user.save()
+            
           }
           res.send("Notification sent")
           
