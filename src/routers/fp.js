@@ -14,7 +14,7 @@ app.get("/allforexProviders", async (req, res, next) => {
         let last=parseInt(req.query.limit)||20
         let ans=[]
         for(var profile of profiles){
-            let data=await Currency.find({forexProvider:profile._id}).limit(last).exec()
+            let data=await Currency.find({forexProvider:profile._id}).sort({createdAt:-1}).limit(last).exec()
             
             console.log(profile)
             ans.push({...profile.toJSON(),rates:data})
@@ -76,7 +76,7 @@ app.get("/forexProviders/:title", async (req, res, next) => {
             title : req.params.title
         })
         let last=parseInt(req.query.limit)||20
-        let data=await Currency.find({forexProvider:profile._id}).limit(last).exec()
+        let data=await Currency.find({forexProvider:profile._id}).sort({createdAt:-1}).limit(last).exec()
         res.send({...profile.toJSON(),rates:data})
         
     }
