@@ -24,15 +24,15 @@ const currencySchema = new mongoose.Schema({
     USDUSD:{
         rate:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         },
         bid:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         },
         ask:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         }
     },
     USDINR:{
@@ -66,15 +66,15 @@ const currencySchema = new mongoose.Schema({
     EUREUR:{
         rate:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         },
         bid:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         },
         ask:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         }
     },
     EURINR:{
@@ -122,15 +122,15 @@ const currencySchema = new mongoose.Schema({
     INRINR:{
         rate:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         },
         bid:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         },
         ask:{
             type:mongoose.SchemaTypes.String,
-            required:true
+            default:"1",
         }
     }
     

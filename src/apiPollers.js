@@ -10,7 +10,8 @@ const getData=async ()=>{
   let data={}
     for(let from of currencies){
       for(let to of currencies){
-        
+        if(to==from)
+          continue
         for(let key of keys){
           try{
             let res= await axios({
