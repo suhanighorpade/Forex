@@ -28,5 +28,6 @@ app.use(errorHandler);
 const port=process.env.PORT||8081
 
 app.listen(port,()=>{
-    console.log(`Node server started on ${port} port`)
+	console.log(`Node server started on ${port} port`)
+	console.log(`Server started on port http://localhost:${port}/`)
 })

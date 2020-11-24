@@ -30,6 +30,10 @@ app.get("/allforexProviders", async (req, res, next) => {
     }
 })
 
+<<<<<<< Updated upstream
+=======
+/*HEAD
+>>>>>>> Stashed changes
 
 
 app.get("/getratings/:title",function (req, res) {
@@ -68,6 +72,11 @@ app.get("/setratings/:title/:rate",function (req, res) {
         }
     });
 });
+<<<<<<< Updated upstream
+=======
+=======
+*/
+>>>>>>> Stashed changes
 
 app.get("/forexProviders/:title", async (req, res, next) => {
     console.log(req.body)
