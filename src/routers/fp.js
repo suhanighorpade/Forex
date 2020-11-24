@@ -30,53 +30,6 @@ app.get("/allforexProviders", async (req, res, next) => {
     }
 })
 
-<<<<<<< Updated upstream
-=======
-/*HEAD
->>>>>>> Stashed changes
-
-
-app.get("/getratings/:title",function (req, res) {
-    fp.findOne({title : req.params.title},function (err, fpsss) {
-        if(err){
-            console.log("Can not retrive ...");
-            console.log(err);
-        }else
-        {
-            totaluser_1 = fpsss.rating.get("1")
-            totaluser_2 = fpsss.rating.get("2")
-            totaluser_3 = fpsss.rating.get("3")
-            totaluser_4 = fpsss.rating.get("4")
-            totaluser_5 = fpsss.rating.get("5")
-
-
-            avgrating = (totaluser_1*1 +totaluser_2*2 + totaluser_3*3+ totaluser_4*4+totaluser_5*5)/(totaluser_1+totaluser_2+totaluser_3+totaluser_4+totaluser_5)
-            console.log(Math.round(avgrating))
-        }
-    });
-});
-
-app.get("/setratings/:title/:rate",function (req, res) {
-    fp.findOne({title : req.params.title},function (err, fpsss) {
-        if(err){
-            console.log("Can not retrive ...");
-            console.log(err);
-        }else
-        {
-            rate = req.params.rate
-            currentrating = fpsss.rating.get(rate) 
-            console.log(currentrating)
-            console.log(typeof(currentrating))
-            fpsss.rating.set(rate,currentrating+1);
-            fpsss.save();
-        }
-    });
-});
-<<<<<<< Updated upstream
-=======
-=======
-*/
->>>>>>> Stashed changes
 
 app.get("/forexProviders/:title", async (req, res, next) => {
     console.log(req.body)
