@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const fp= require("./fp")
+const Alert=require("./alert")
 
 const currencySchema = new mongoose.Schema({
     forexProvider: {
@@ -135,8 +136,25 @@ const currencySchema = new mongoose.Schema({
     }
     
 }, { timestamps: { createdAt: true, updatedAt: true } });
-
-
+const fulFillAlerts= async(rate)=>{
+    let alerts= await Alert.find({completed:false})
+    alerts.forEach(async (alert) => {
+        if(rate[alert.currency][alert.bidask]>=alert.rate){
+            alert.completed=true
+            
+            alert.trader=rate.forexProvider
+            await alert.save()
+        }
+        console.log(alert)
+    });
+}
+currencySchema.pre('save', async function(next){
+	var rate =this
+    console.log("i ran ")
+    console.log("wjhfeffuioehrfreiofirfrirfrfi")
+    fulFillAlerts(rate)
+	next()
+})
 const Currency = mongoose.model('Currency', currencySchema);
 
 module.exports= Currency;

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const db=require("./db/mongoose.js");
 
-const keys=["61a7a85762msh29366a82b682240p1ff543jsn24c7859afdea","fd8f0888f2msh9c9263f1bf8ae26p1785f1jsn277df2de4d84","c794e25a42msh9e03e4287bb8fe3p199cdejsn887ac828abf5"]
+const keys=["fb3e0b020fmsh19af2babc0ad5ffp130cd7jsn625c85e757f5","095e028ce8msh2b3c0600a55dc3ap1d637djsn4803a3011524","d88cf14e1fmsh4d537c72fbca661p1028a6jsn00016c33607e","3042cf0238msh76b721a88ab66cfp177837jsn4470cfe205b4","b6f149ec86mshf0064919babf817p1e5232jsnadff978ad134","53bab156c5mshaadb713c58c0a34p164d38jsn24e7f2686dc8","61a7a85762msh29366a82b682240p1ff543jsn24c7859afdea","fd8f0888f2msh9c9263f1bf8ae26p1785f1jsn277df2de4d84","c794e25a42msh9e03e4287bb8fe3p199cdejsn887ac828abf5"]
 const currencies=["EUR","USD","INR"]
 const saveCurency= require("./utils/saveCurrency")
 
@@ -40,8 +40,9 @@ const getData=async ()=>{
               await new Promise(resolve => setTimeout(resolve, 15000));
               break;
             }
-            catch(e){
-              console.log("Errror happened")
+            catch(error){
+              console.log("error")
+              //await new Promise(resolve => setTimeout(resolve, 15000));
             }
           }
       }
@@ -50,5 +51,5 @@ const getData=async ()=>{
     console.log("finally")
     console.log(data)
 }
-
-setInterval(getData,180000);
+getData()
+setInterval(getData,120000);
