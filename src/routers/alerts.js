@@ -15,7 +15,8 @@ app.post("/alerts",auth,async (req,res, next)=>{
         let rate= await Currency.find({}).sort({createdAt:-1}).limit(1).exec()
         rate=rate[0]
         let saved=Math.max(Number(req.body.rate)-Number(rate[req.body.currency][req.body.bidask]),0)
-        saved=saved*Number(req.body.ammount)
+        saved=(saved*Number(req.body.ammount)).toFixed(2)
+        
         let alert= new Alert({...req.body,user:user._id,saved})
         alert = await alert.save()
         res.send(alert)
@@ -36,7 +37,7 @@ app.get("/alerts",auth,async (req,res, next)=>{
         for(let alert of alerts)
         {
             if(alert.completed==true&&alert.seen==false)
-                ans.push({...alert.toJSON(),seen:true})
+                ans.push({...alert.toJSON(),seen:true,saved:alert.saved.toFixed(2)})
             else
             ans.push({...alert.toJSON()})
         }
