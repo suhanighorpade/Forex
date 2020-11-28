@@ -1,4 +1,5 @@
 const jwt= require("jsonwebtoken")
+const fp = require("../models/fp.js")
 const User= require("../models/users.js")
 
 
@@ -9,10 +10,14 @@ const auth= async function(req,res,next){
         console.log(token)
         const decoded =await jwt.verify(token,"secretkey")
         console.log(decoded)
-        const user=await User.findOne({_id:decoded.id, 'tokens.token':token})
+        var user=await User.findOne({_id:decoded.id, 'tokens.token':token})
         if(!user)
-            throw new Error("No such user")
-        
+            {
+                 user=await fp.findOne({_id:decoded.id, 'tokens.token':token})
+            }
+        if(!user){
+            throw new Error("Token invalid")
+        }
         req.user=user
         req.token=token
         next()

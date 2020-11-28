@@ -171,7 +171,9 @@ app.get("/me", auth, async (req,res,next)=>{4
     console.log("me req")
     console.log(req)
     try{
-        res.send(req.user)
+       
+            res.send(req.user)
+        
     }
     catch(e){
         return next({

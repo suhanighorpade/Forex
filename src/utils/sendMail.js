@@ -9,7 +9,9 @@ var getUsers = async function (title) {
     var emails = provider.users
     return emails
 }
+ var getPosts ={
 
+ }
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -32,5 +34,6 @@ var sendNotification=async function(to,noti){
 
 module.exports = {
     getUsers,
-    sendNotification
+    sendNotification,
+    getPosts
 };
