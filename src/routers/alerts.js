@@ -37,9 +37,10 @@ app.get("/alerts",auth,async (req,res, next)=>{
         let ans=[];
         for(let alert of alerts)
         {
-            if(alert.completed==true&&alert.seen==false){
+            if(alert.completed==true){
                 let provider=await Fp.findOne({_id:alert.trader})
                 provider=provider.title
+                
                 ans.push({...alert.toJSON(),seen:true,saved:alert.saved.toFixed(2),trader:provider})
             }
                 
