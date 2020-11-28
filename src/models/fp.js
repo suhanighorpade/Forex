@@ -35,6 +35,8 @@ const schema = mongoose.Schema({
     },
     users :[
     ],
+    notifications : [
+    ],
     tokens:[
         {
         token:{

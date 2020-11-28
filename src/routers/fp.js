@@ -32,11 +32,12 @@ app.get("/allforexProviders", async (req, res, next) => {
 
 
 app.get("/forexProviders/:title", async (req, res, next) => {
-    console.log(req.body)
+    console.log("fp call")
     try {
         var profile = await fp.findOne({
             title : req.params.title
         })
+        console.log(profile)
         let last=parseInt(req.query.limit)||20
         let data=await Currency.find({forexProvider:profile._id}).sort({createdAt:-1}).limit(last).exec()
         res.send({...profile.toJSON(),rates:data})
